@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Neue', cursive;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Graffiti-style static background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        /* Graffiti spray paint effect */
+        radial-gradient(circle at 15% 30%, rgba(255, 107, 107, 0.6) 0%, transparent 40%),
+        radial-gradient(circle at 85% 70%, rgba(107, 255, 193, 0.6) 0%, transparent 40%),
+        radial-gradient(circle at 50% 20%, rgba(255, 206, 84, 0.6) 0%, transparent 40%),
+        radial-gradient(circle at 30% 80%, rgba(138, 43, 226, 0.6) 0%, transparent 40%),
+        radial-gradient(circle at 70% 50%, rgba(255, 139, 148, 0.6) 0%, transparent 40%),
+        /* Base graffiti wall */
+        linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 30%, #ffe66d 60%, #a8e6cf 100%);
+    background-size: 100% 100%;
+    z-index: -1;
+    opacity: 0.9;
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    z-index: 1;
+}
+
+.auth-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 107, 107, 0.2);
+    border: 5px solid #ff6b6b;
+    animation: bounceIn 0.6s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-box::before {
+    content: '⭐';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+    animation: spin 3s linear infinite;
+}
+
+.auth-box::after {
+    content: '✨';
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-size: 25px;
+    animation: twinkle 2s ease-in-out infinite;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+.auth-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-header h1 {
+    font-family: 'Fredoka One', cursive;
+    color: #ff6b6b;
+    font-size: 42px;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 0px #ffe66d, 6px 6px 0px rgba(0,0,0,0.1);
+    animation: wiggle 2s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-2deg); }
+    75% { transform: rotate(2deg); }
+}
+
+.auth-header p {
+    color: #4ecdc4;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    color: #ff6b6b;
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 15px 20px;
+    border: 4px solid #ffe66d;
+    border-radius: 15px;
+    font-size: 18px;
+    transition: all 0.3s;
+    font-family: 'Comic Neue', cursive;
+    background: #fff;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.1);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="email"]:focus,
+.form-group input[type="password"]:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    transform: scale(1.02);
+    box-shadow: 0 6px 0 rgba(255, 107, 107, 0.3);
+}
+
+.form-hint {
+    display: block;
+    color: #4ecdc4;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 700;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: normal;
+    color: #4ecdc4;
+    font-weight: 700;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    cursor: pointer;
+    accent-color: #ff6b6b;
+}
+
+.btn {
+    width: 100%;
+    padding: 18px;
+    border: none;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Fredoka One', cursive;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #ffe66d 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.btn-primary:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 0 rgba(0,0,0,0.2), 0 0 30px rgba(255, 107, 107, 0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+}
+
+.error-message {
+    color: #ff4757;
+    font-size: 16px;
+    margin-top: 15px;
+    text-align: center;
+    display: none;
+    font-weight: 700;
+    padding: 15px;
+    background: rgba(255, 71, 87, 0.1);
+    border-radius: 15px;
+    border: 3px solid #ff4757;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.error-message.show {
+    display: block;
+}
+
+.success-message {
+    color: #2ed573;
+    font-size: 16px;
+    margin-top: 15px;
+    text-align: center;
+    display: none;
+    font-weight: 700;
+    padding: 15px;
+    background: rgba(46, 213, 115, 0.1);
+    border-radius: 15px;
+    border: 3px solid #2ed573;
+    animation: bounce 0.6s;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.success-message.show {
+    display: block;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 4px dashed #ffe66d;
+}
+
+.auth-footer p {
+    color: #4ecdc4;
+    font-size: 16px;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+.auth-footer a {
+    color: #ff6b6b;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 18px;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+    transform: scale(1.1);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 480px) {
+    .auth-box {
+        padding: 30px 20px;
+    }
+    
+    .auth-header h1 {
+        font-size: 32px;
+    }
+}
+
+/* Interactive hover effects for all elements */
+* {
+    transition: all 0.3s ease;
+}

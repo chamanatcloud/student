@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shear Centre Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        body {
+            background: 
+                radial-gradient(circle at 15% 30%, rgba(255, 107, 107, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(107, 255, 193, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, rgba(255, 206, 84, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 30% 80%, rgba(138, 43, 226, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(255, 139, 148, 0.6) 0%, transparent 40%),
+                linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 30%, #ffe66d 60%, #a8e6cf 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 5px solid #ff6b6b;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #ff6b6b;
+            font-size: 36px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #ffe66d;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        .canvas-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #4ecdc4;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%);
+            color: white;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button.clear {
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+        }
+        
+        button.calculate {
+            background: linear-gradient(135deg, #4ecdc4 0%, #2ed573 100%);
+        }
+        
+        #drawingCanvas {
+            border: 3px solid #ffe66d;
+            border-radius: 10px;
+            cursor: crosshair;
+            display: block;
+            background: white;
+            width: 100%;
+        }
+        
+        .info-panel {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #ffe66d;
+        }
+        
+        .info-panel h2 {
+            color: #4ecdc4;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .info-item label {
+            font-weight: 700;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .info-item .value {
+            font-size: 18px;
+            color: #4ecdc4;
+            font-weight: 700;
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 3px solid #ffe66d;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+            color: #333;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Shear Centre Calculator 🎨</h1>
+        
+        <div class="instructions">
+            <h3>📝 Instructions:</h3>
+            <ul>
+                <li>Click and drag on the canvas to draw your shape</li>
+                <li>Draw a closed shape (connect back to the starting point)</li>
+                <li>Click "Calculate Shear Centre" to find the result</li>
+                <li>Click "Clear Canvas" to start over</li>
+                <li>The red dot shows the shear centre location</li>
+            </ul>
+        </div>
+        
+        <div class="main-content">
+            <div class="canvas-section">
+                <div class="controls">
+                    <button class="calculate" onclick="calculateShearCentre()">🔍 Calculate Shear Centre</button>
+                    <button class="clear" onclick="clearCanvas()">🗑️ Clear Canvas</button>
+                    <button onclick="toggleGrid()">📐 Toggle Grid</button>
+                </div>
+                <canvas id="drawingCanvas" width="800" height="600"></canvas>
+            </div>
+            
+            <div class="info-panel">
+                <h2>📊 Results</h2>
+                <div class="info-item">
+                    <label>Shear Centre X:</label>
+                    <div class="value" id="shearX">-</div>
+                </div>
+                <div class="info-item">
+                    <label>Shear Centre Y:</label>
+                    <div class="value" id="shearY">-</div>
+                </div>
+                <div class="info-item">
+                    <label>Centroid X:</label>
+                    <div class="value" id="centroidX">-</div>
+                </div>
+                <div class="info-item">
+                    <label>Centroid Y:</label>
+                    <div class="value" id="centroidY">-</div>
+                </div>
+                <div class="info-item">
+                    <label>Area:</label>
+                    <div class="value" id="area">-</div>
+                </div>
+                <div class="info-item">
+                    <label>Points in Shape:</label>
+                    <div class="value" id="pointCount">0</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="shear-centre.js"></script>
+</body>
+</html>
+

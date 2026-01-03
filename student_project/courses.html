@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - Student Dashboard</title>
+    <link rel="stylesheet" href="auth-styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@400;700&display=swap');
+        
+        * {
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .courses-container {
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Graffiti background */
+        .courses-container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                /* Graffiti spray paint effect */
+                radial-gradient(circle at 15% 30%, rgba(255, 107, 107, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(107, 255, 193, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, rgba(255, 206, 84, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 30% 80%, rgba(138, 43, 226, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(255, 139, 148, 0.6) 0%, transparent 40%),
+                /* Base graffiti wall */
+                linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 30%, #ffe66d 60%, #a8e6cf 100%);
+            background-size: 100% 100%;
+            z-index: -1;
+            opacity: 0.9;
+        }
+        .courses-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .courses-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 5px solid #ff6b6b;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .courses-header h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 0px #ffe66d;
+            font-size: 36px;
+        }
+        
+        .btn-back {
+            background: linear-gradient(135deg, #4ecdc4 0%, #ffe66d 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+        .btn-back:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+        }
+        .courses-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 4px solid #4ecdc4;
+            position: relative;
+            z-index: 1;
+        }
+        .courses-section h2 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 2px 2px 0px #ffe66d;
+        }
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .course-card {
+            border: 4px solid #ffe66d;
+            border-radius: 20px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.9);
+            position: relative;
+            animation: cardPop 0.5s ease;
+        }
+        
+        @keyframes cardPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .course-card:hover {
+            border-color: #ff6b6b;
+            border-width: 6px;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transform: translateY(-10px) scale(1.05) rotate(1deg);
+        }
+        .course-card.enrolled {
+            border-color: #2ed573;
+            background: linear-gradient(135deg, #f0fdf4 0%, #e8f5e9 100%);
+        }
+        .course-card h3 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            font-size: 24px;
+            text-shadow: 1px 1px 0px #ffe66d;
+        }
+        .course-card p {
+            color: #666;
+            margin: 8px 0;
+            font-size: 14px;
+        }
+        .course-code {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .course-credits {
+            color: #999;
+            font-size: 13px;
+        }
+        .enroll-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #ffe66d 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Fredoka One', cursive;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            font-size: 14px;
+            width: 100%;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        .enroll-btn:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2), 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+        .enroll-btn.enrolled {
+            background: linear-gradient(135deg, #2ed573 0%, #26c965 100%);
+        }
+        .enroll-btn.enrolled:hover {
+            background: linear-gradient(135deg, #26c965 0%, #2ed573 100%);
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .enroll-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .badge-enrolled {
+            background: #2ed573;
+            color: white;
+        }
+        .badge-available {
+            background: #667eea;
+            color: white;
+        }
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="courses-container">
+        <div class="courses-content">
+            <div class="courses-header">
+                <div>
+                    <h1>📚 Courses</h1>
+                    <p>Browse and enroll in available courses</p>
+                </div>
+                <a href="dashboard.html" class="btn-back">← Back to Dashboard</a>
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+            <div id="successMessage" class="success-message" style="display: none;"></div>
+
+            <div class="courses-section">
+                <h2>Available Courses</h2>
+                <div id="loadingMessage" class="loading">Loading courses...</div>
+                <div id="coursesGrid" class="courses-grid" style="display: none;"></div>
+            </div>
+
+            <div class="courses-section">
+                <h2>My Enrolled Courses</h2>
+                <div id="enrolledCourses" class="courses-grid"></div>
+                <div id="noEnrolledMessage" style="text-align: center; padding: 20px; color: #666; display: none;">
+                    <p>You haven't enrolled in any courses yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="courses.js"></script>
+    <script src="interactive.js"></script>
+</body>
+</html>
+

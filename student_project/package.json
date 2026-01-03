@@ -1,0 +1,19 @@
+{
+  "name": "digital-calculator",
+  "version": "1.0.0",
+  "description": "A digital calculator web application",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": ["calculator", "web"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "bcryptjs": "^2.4.3"
+  }
+}
+

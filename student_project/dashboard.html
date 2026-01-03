@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="auth-styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Comic+Neue:wght@400;700&display=swap');
+        
+        * {
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .dashboard-container {
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Graffiti background */
+        .dashboard-container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                /* Graffiti spray paint effect */
+                radial-gradient(circle at 15% 30%, rgba(255, 107, 107, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 85% 70%, rgba(107, 255, 193, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, rgba(255, 206, 84, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 30% 80%, rgba(138, 43, 226, 0.6) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(255, 139, 148, 0.6) 0%, transparent 40%),
+                /* Base graffiti wall */
+                linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 30%, #ffe66d 60%, #a8e6cf 100%);
+            background-size: 100% 100%;
+            z-index: -1;
+            opacity: 0.9;
+        }
+        .dashboard-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 5px solid #ff6b6b;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .dashboard-header h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 0px #ffe66d;
+            font-size: 36px;
+        }
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 5px solid #4ecdc4;
+            position: relative;
+            z-index: 1;
+            animation: slideIn 0.6s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .welcome-section h2 {
+            font-family: 'Fredoka One', cursive;
+            color: #4ecdc4;
+            font-size: 32px;
+            text-shadow: 2px 2px 0px #ffe66d;
+        }
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .info-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border: 4px solid #ffe66d;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+            animation: cardFloat 3s ease-in-out infinite;
+        }
+        
+        .info-card:nth-child(1) { animation-delay: 0s; border-color: #ff6b6b; }
+        .info-card:nth-child(2) { animation-delay: 0.5s; border-color: #4ecdc4; }
+        .info-card:nth-child(3) { animation-delay: 1s; border-color: #ffe66d; }
+        .info-card:nth-child(4) { animation-delay: 1.5s; border-color: #a8e6cf; }
+        
+        @keyframes cardFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .info-card.clickable {
+            cursor: pointer;
+        }
+        
+        .info-card.clickable:hover {
+            transform: translateY(-10px) scale(1.05) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border-width: 6px;
+        }
+        
+        .info-card h3 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-shadow: 2px 2px 0px #ffe66d;
+        }
+        .info-card p {
+            color: #666;
+            margin: 5px 0;
+        }
+        .btn-logout {
+            background: linear-gradient(135deg, #ff4757 0%, #ff6b6b 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            font-family: 'Fredoka One', cursive;
+            transition: all 0.3s;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+            text-transform: uppercase;
+        }
+        .btn-logout:hover {
+            background: linear-gradient(135deg, #ff3838 0%, #ff4757 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.2);
+        }
+        .btn-logout:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+        }
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Student Dashboard</h1>
+                    <p id="welcomeText">Welcome back!</p>
+                </div>
+                <button class="btn-logout" onclick="logout()">Logout</button>
+            </div>
+            
+            <div class="welcome-section">
+                <h2>Welcome, <span id="studentName">Student</span>!</h2>
+                <div class="student-info">
+                    <div>
+                        <strong>Email:</strong>
+                        <p id="studentEmail">-</p>
+                    </div>
+                    <div>
+                        <strong>Student ID:</strong>
+                        <p id="studentId">-</p>
+                    </div>
+                    <div>
+                        <strong>Login Time:</strong>
+                        <p id="loginTime">-</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-cards">
+                <div class="info-card" onclick="window.location.href='courses.html'" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                    <h3>📚 Courses</h3>
+                    <p>View and enroll in courses</p>
+                    <p><strong>Status:</strong> Click to browse</p>
+                </div>
+                <div class="info-card">
+                    <h3>📝 Assignments</h3>
+                    <p>Check your assignments</p>
+                    <p><strong>Status:</strong> Available</p>
+                </div>
+                <div class="info-card">
+                    <h3>📊 Grades</h3>
+                    <p>View your academic progress</p>
+                    <p><strong>Status:</strong> Available</p>
+                </div>
+                <div class="info-card">
+                    <h3>⚙️ Settings</h3>
+                    <p>Manage your account</p>
+                    <p><strong>Status:</strong> Available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="dashboard.js"></script>
+    <script src="interactive.js"></script>
+</body>
+</html>
+
